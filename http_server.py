@@ -32,7 +32,7 @@ def response_ok(body=b"This is a minimal response", mimetype=b"text/plain"):
 
     return b"".join([
         b"HTTP/1.1 200 OK\r\n",
-        b"Content-Type:" + mimetype + b"\r\n",
+        b"Content-Type: " + mimetype + b"\r\n",
         b"\r\n",
         body
     ])
@@ -135,7 +135,7 @@ def response_path(path):
         # print("Didn't find it")
         raise NameError
 
-    return content, mime_type
+    return content, mime_type.encode()
 
 
 def server(log_buffer=sys.stderr):
@@ -172,7 +172,7 @@ def server(log_buffer=sys.stderr):
                         # Use the content and mimetype from response_path to build a response_ok
                         response = response_ok(
                             body=content,
-                            mimetype=mimetype.encode()
+                            mimetype=mimetype
                         )
 
                     # If response_path raised a NameError then let the response be not_found
